@@ -2,8 +2,12 @@ import {FC, useState, ChangeEvent, FormEvent} from "react";
 import {ITimerInput} from "../../interface/ITimer";
 import FormInput from "../FormInput/FormInput";
 import sound_src from "../../assets/sound/race-start-beeps-125125.mp3"
+import {useTimerStore} from "../../store/store.timer";
 
 const TimeInput: FC<ITimerInput> = ({timerHandle, submitDisabled}) => {
+    const {
+        setIsLoading
+    } = useTimerStore();
     const [hours, setHours] = useState<number>(0);
     const [minutes, setMinutes] = useState<number>(0);
     const [seconds, setSeconds] = useState<number>(0);
@@ -30,11 +34,14 @@ const TimeInput: FC<ITimerInput> = ({timerHandle, submitDisabled}) => {
 
         const totalSeconds = hours * 3600 + minutes * 60 + seconds;
         setTotalSeconds(totalSeconds);
-        sound.play().then(() =>
+        sound.play().then(() =>{
+            setIsLoading(true)
             setTimeout(() => {
                 timerHandle(totalSeconds);
-            }, 3000)).catch(e => console.log(e))
-    };
+                setIsLoading(false)
+            }, 3000)
+        }).catch(e =>console.log(e))
+    }
     const handleClear = () => {
         setHours(0);
         setMinutes(0);
@@ -43,7 +50,7 @@ const TimeInput: FC<ITimerInput> = ({timerHandle, submitDisabled}) => {
 
     return (
         <div>
-            <form onSubmit={(e) => e.preventDefault()} className={"flex gap-[10px]"}>
+            <form onSubmit={(e) => e.preventDefault()} className={"flex flex-col lg:flex-row gap-[10px]"}>
                 <div className={"flex flex-col gap-[5px]"}>
                     <FormInput
                         title="Hours"

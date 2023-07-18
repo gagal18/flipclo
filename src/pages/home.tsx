@@ -5,7 +5,7 @@ const Home: FC = () => {
     return (
         <div>
             <div className="text-5xl font-bold border-b-4 border-accent w-[80%] lg:w-max text-center justify-center flex items-center mx-auto">
-                <h1 className={"inline-flex items-center gap-[20px]"}>Welcome to
+                <h1 className={"inline-flex flex-col lg:flex-row items-center gap-[20px]"}>Welcome to
                     <div className={"flex items-center"}>
                         flipcl<RealtimeClock />
                     </div>

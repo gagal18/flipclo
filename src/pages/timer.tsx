@@ -7,7 +7,7 @@ import {
     AiOutlinePause,
     AiOutlinePlayCircle,
     AiOutlineUnlock,
-    AiOutlineLock
+    AiOutlineLock, AiOutlineLoading3Quarters
 } from 'react-icons/ai';
 import {useTimerStore} from "../store/store.timer";
 import FullScreen from 'react-fullscreen-crossbrowser';
@@ -23,6 +23,7 @@ const Timer: FC = () => {
         setInitValueSeconds,
         setNextValue,
         setIsPaused,
+        isLoading
     } = useTimerStore();
 
     const {setIsFullscreen, IsFullScreen} = useFullscreenStore()
@@ -59,7 +60,13 @@ const Timer: FC = () => {
                 onChange={(isFullscreenEnabled: boolean) => setIsFullscreen(isFullscreenEnabled)}
             >
                 <div className={IsFullScreen ? "transition-all ease-in-out flex flex-col items-center justify-center h-[100vh] scale-125 " : ""}>
-                    <div className={"flex flex-col lg:flex-row gap-[10px] justify-center items-center mt-[50px]"}>
+                    {isLoading?
+                        <div className={"absolute w-full h-full top-0 left-0 bg-black/[.6] z-10 flex items-center justify-center"}>
+                            <span className="loading loading-dots loading-lg"></span>
+
+                        </div>
+                        : null}
+                    <div className={"flex flex-col lg:flex-row gap-[10px] justify-center items-center mt-[50px] relative"}>
                         <TimerCards toCount={countValue > 0} value={countValue} nextValue={nextValue}/>
                     </div>
                     <div className={"flex items-center gap-[10px] justify-center mt-[50px]"}>
