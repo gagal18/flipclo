@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react';
+import {FC} from 'react';
 import {NavLink, Outlet} from "react-router-dom";
 import {AiOutlineClockCircle, AiOutlineHome, AiOutlineInfoCircle, AiOutlineLock, AiOutlineUnlock} from "react-icons/ai";
 import {RxCountdownTimer, RxTimer} from "react-icons/rx";

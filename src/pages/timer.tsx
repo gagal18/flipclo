@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react';
+import {FC} from 'react';
 import TimerCards from "../components/Card/TimerCards";
 import TimeInput from "../components/TimeInput/TimeInput";
 import {
@@ -57,7 +57,6 @@ const Timer: FC = () => {
             <FullScreen
                 enabled={IsFullScreen}
                 onChange={(isFullscreenEnabled: boolean) => setIsFullscreen(isFullscreenEnabled)}
-                class
             >
                 <div className={IsFullScreen ? "transition-all ease-in-out flex flex-col items-center justify-center h-[100vh] scale-125 " : ""}>
                     <div className={"flex flex-col lg:flex-row gap-[10px] justify-center items-center mt-[50px]"}>
