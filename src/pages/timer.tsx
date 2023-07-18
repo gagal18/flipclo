@@ -7,7 +7,7 @@ import {
     AiOutlinePause,
     AiOutlinePlayCircle,
     AiOutlineUnlock,
-    AiOutlineLock, AiOutlineLoading3Quarters
+    AiOutlineLock,
 } from 'react-icons/ai';
 import {useTimerStore} from "../store/store.timer";
 import FullScreen from 'react-fullscreen-crossbrowser';
