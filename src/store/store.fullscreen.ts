@@ -8,11 +8,10 @@ export const useFullscreenStore = create<IScreen>()(
         (set) => ({
             IsFullScreen: false,
             setIsFullscreen: (isFs:boolean) => set(() => ({IsFullScreen: isFs })),
-
         }),
         {
-            name: "fullscreen-store", // name of the item in the storage (must be unique)
-            storage: createJSONStorage(() => sessionStorage)// (optional) by default, 'localStorage' is used
+            name: "fullscreen-store",
+            storage: createJSONStorage(() => sessionStorage)
         }
 
     )

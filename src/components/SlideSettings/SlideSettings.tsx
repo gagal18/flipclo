@@ -1,7 +1,8 @@
 import {FC, useEffect, useState} from 'react';
-import {AiOutlineClose, AiOutlineSetting} from "react-icons/ai";
+import {AiOutlineClose, AiOutlineSetting, AiOutlineUser} from "react-icons/ai";
 import {IoMoonOutline, IoSunnyOutline} from "react-icons/io5";
 import {themeChange} from "theme-change";
+import {NavLink} from "react-router-dom";
 
 const SlideSettings: FC = () => {
     useEffect(() => {
@@ -34,7 +35,8 @@ const SlideSettings: FC = () => {
                         <div>
                             <p>Currently you can toggle the theme, more features coming</p>
                         </div>
-                        <label className="swap swap-rotate mr-1">
+                        <div className={"flex"}>
+                        <label className="swap swap-rotate mr-1 btn btn-ghost p-0">
                             <input type="checkbox"/>
                             <span className="btn btn-square btn-ghost swap-on" data-key="theme" data-set-theme="luxury"
                                   data-act-class="active">
@@ -46,7 +48,12 @@ const SlideSettings: FC = () => {
                         </span>
 
                         </label>
-
+                        <NavLink to={"/dashboard"} onClick={handleClose}>
+                            <button className="btn btn-ghost">
+                                <AiOutlineUser size={"24px"}/>
+                            </button>
+                        </NavLink>
+                        </div>
                     </div>
                     <div className={"flex flex-col items-start justify-between"}>
                         <button className="btn btn-neutral" onClick={handleClose}>

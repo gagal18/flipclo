@@ -9,6 +9,7 @@ import Pomodoro from "./pages/pomodoro";
 import About from "./pages/about";
 import {useEffect} from "react";
 import {useTimerStore} from "./store/store.timer";
+import Dashboard from "./pages/dashboard";
 
 function App() {
     const {
@@ -41,6 +42,7 @@ function App() {
                 {index: true, element: <Home/>},
                 {path: "/timer", element: <Timer/>},
                 {path: "/pomodoro", element: <Pomodoro/>},
+                {path: "/dashboard", element: <Dashboard/>},
                 {path: "/about", element: <About/>},
                 {path: "*", element: <NoMatch/>},
             ],

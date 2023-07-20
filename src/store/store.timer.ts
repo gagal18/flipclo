@@ -18,9 +18,8 @@ export const useTimerStore = create<TimerState>()(
             setIsLoading: (loading:boolean) => set(() => ({isLoading: loading })),
         }),
         {
-            name: "timer-store", // name of the item in the storage (must be unique)
-            storage: createJSONStorage(() => sessionStorage)// (optional) by default, 'localStorage' is used
+            name: "timer-store",
+            storage: createJSONStorage(() => sessionStorage)
         }
-
     )
 );
