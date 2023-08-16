@@ -1,32 +1,26 @@
-import {FC} from "react";
+import {FC, useState} from "react";
 import {ICard} from "../../interface/ICard";
 
-const Card: FC<ICard> = ({value, nextValue}) => {
+const Card: FC<ICard> = ({value, index, length}) => {
     return (
-        <>
-        <div className={"relative"}>
-            <div className={`${value == nextValue+1 ? "opacity-1 z-10" : "opacity-0"} transition-all duration-1000 relative flex flex-col h-[200px] w-max perspective-10`}>
-                <div
-                    className={"bg-black shadow-xl w-[70px] h-[100px] bg-black flex items-bottom justify-center overflow-hidden "}>
-                    <span className={"text-white text-[80px] -bottom-[35px] relative"}>{nextValue}</span>
+            <div className={`absolute flex flex-col justify-end h-[200px] ${value == index ? 'z-50 opacity-100' : 'z-10 opacity-0'}`} data-index={index}>
+                    <div className={`top-0 bg-red opacity-100 transition-all  relative perspective-10 ${value == index ? 'z-50 opacity-100' : 'opacity-20'}`}>
+                    <div className={`h-[100px] relative transition-all duration-1000  transform-style-3d origin-bottom ${value == index ? 'rotate-x-180 z-50' : 'rotate-x-0'}`}>
+                        <div className={`absolute bg-black w-[70px] h-[100px] bg-black flex items-bottom justify-center overflow-hidden backface-hidden`}>
+                            <span className={"text-white text-[80px] -bottom-[40px] relative"}>{index+1 < length ? index+1 : 0}</span>
+                        </div>
+                        <div className={`absolute bg-black w-[70px] h-[100px] bg-black flex items-bottom justify-center overflow-hidden backface-hidden rotate-x-180`}>
+                            <span className={"text-white text-[80px] -top-[60px] relative"}>{index}</span>
+                        </div>
+                    </div>
                 </div>
-                <div
-                    className={`bg-black shadow-xl w-[70px] h-[100px] bg-black flex items-start justify-center overflow-hidden absolute transition-all origin-bottom duration-1000 transform-style-3d ${value == nextValue+1 ? "rotate-x-180 mt-[2px]" : ""}`}>
-                    <span
-                        className={`text-white text-[80px] top-[45px] relative ${value == nextValue+1 ? "rotate-x-180" : ""}`}>{nextValue}</span>
-                </div>
-            </div>
-            <div className={"top-0 absolute flex flex-col gap-[1px] h-[200px] w-max perspective-10"}>
-                <div className={"shadow-xl w-[70px] h-[100px] bg-gradient-to-b from-black from-65% to-[#555555] flex items-bottom justify-center overflow-hidden "}>
-                    <span className={"text-white text-[80px] -bottom-[35px] relative"}>{value}</span>
-                </div>
-                <div
-                    className={`shadow-xl w-[70px] h-[100px] bg-gradient-to-t from-black from-65% to-[#555555] flex items-start justify-center overflow-hidden `}>
-                    <span className={`text-white text-[80px] -top-[65px] relative`}>{value}</span>
+                    <div className={`bottom-0 relative flex flex-col gap-[1px] w-max ${value == index ? "z-20" : "z-1"}`}>
+                    <div
+                        className={`w-[70px] h-[100px] bg-black flex items-start justify-center overflow-hidden `}>
+                        <span className={`text-white text-[80px] -top-[60px] relative`}>{index+1 < length ? index+1 : 0}</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        </>
     )
 }
 

@@ -5,3 +5,8 @@ export interface FormInputProps {
     value: number | string;
     onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
+
+export interface SlideInputProps extends FormInputProps {
+    max: number;
+    step: number;
+}

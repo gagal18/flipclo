@@ -1,5 +1,4 @@
-import {FC} from 'react';
-import TimerCards from "../components/Card/TimerCards";
+import {FC, useEffect} from 'react';
 import TimeInput from "../components/TimeInput/TimeInput";
 import {
     AiOutlineReload,
@@ -12,16 +11,15 @@ import {
 import {useTimerStore} from "../store/store.timer";
 import FullScreen from 'react-fullscreen-crossbrowser';
 import {useFullscreenStore} from "../store/store.fullscreen";
+import TimerCards from "../components/Card/TimerCards";
 
 const Timer: FC = () => {
     const {
         initValueSeconds,
         countValue,
         setCountValue,
-        nextValue,
         isPaused,
         setInitValueSeconds,
-        setNextValue,
         setIsPaused,
         isLoading
     } = useTimerStore();
@@ -30,19 +28,16 @@ const Timer: FC = () => {
 
     const startTimerHandler = (seconds: number) => {
         setInitValueSeconds(seconds)
-        setNextValue(seconds);
         setCountValue(seconds)
         setIsPaused(false)
     }
 
     const handleRestart = () => {
         setCountValue(initValueSeconds);
-        setNextValue(initValueSeconds);
     };
 
     const handleClear = () => {
         setInitValueSeconds(0);
-        setNextValue(0);
         setCountValue(0);
     };
 
@@ -50,6 +45,17 @@ const Timer: FC = () => {
         setIsPaused(!isPaused);
     };
 
+    useEffect(() => {
+        if(countValue > 0 && !isPaused){
+            const interval = setInterval(() => {
+                setCountValue( countValue - 1);
+            }, 1000);
+
+            return () => {
+                clearInterval(interval);
+            };
+        }
+    }, [countValue, isPaused]);
     return (
         <div>
             <h1 className="text-3xl font-bold underline text-center">
@@ -67,7 +73,7 @@ const Timer: FC = () => {
                         </div>
                         : null}
                     <div className={"flex flex-col lg:flex-row gap-[10px] justify-center items-center mt-[50px] relative"}>
-                        <TimerCards toCount={countValue > 0} value={countValue} nextValue={nextValue}/>
+                        <TimerCards toCount={countValue > 0} value={countValue} />
                     </div>
                     <div className={"flex items-center gap-[10px] justify-center mt-[50px]"}>
                         <div

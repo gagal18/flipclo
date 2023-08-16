@@ -1,6 +1,6 @@
 import {FC, useState, ChangeEvent, FormEvent} from "react";
 import {ITimerInput} from "../../interface/ITimer";
-import FormInput from "../FormInput/FormInput";
+import FormInput from "../Input/FormInput";
 import sound_src from "../../assets/sound/race-start-beeps-125125.mp3"
 import {useTimerStore} from "../../store/store.timer";
 
