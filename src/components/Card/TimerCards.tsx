@@ -1,31 +1,59 @@
 import {FC} from "react";
-import Card from "./Card";
 import {timeFormat} from "../../utils/time-format";
 import {ICardGroup} from "../../interface/ICard";
+import CardStack from "./CardStack";
 
-const TimerCards: FC<ICardGroup> = ({value, nextValue, toCount}) => {
+const TimerCards: FC<ICardGroup> = ({value, toCount}) => {
     const time =  toCount ? timeFormat(value) : timeFormat(0)
-    const next =  toCount ? timeFormat(nextValue) : timeFormat(0)
-
     return (
         <>
             <div className={"flex"}>
-                <Card value={next.hours[0] == 9 ? 9 : time.hours[0]} nextValue={next.hours[0]} />
-                <Card value={next.hours[1] == 9 ? 9 : time.hours[1]} nextValue={next.hours[1]} />
+                <div className={"h-[200px] relative flex flex-col gap-[1px]"}>
+                    <div className={`relative w-[70px] h-[100px] bg-black flex items-bottom justify-center`}>
+                        <span className={"text-white text-[80px] -bottom-[40px] relative"}>{time.hours[0]}</span>
+                    </div>
+                    <CardStack value={time.hours[0]} cardsCount={6} />
+                </div>
+                <div className={"h-[200px] relative flex flex-col gap-[1px]"}>
+                    <div className={`relative w-[70px] h-[100px] bg-black flex items-bottom justify-center`}>
+                        <span className={"text-white text-[80px] -bottom-[40px] relative"}>{time.hours[1]}</span>
+                    </div>
+                    <CardStack value={time.hours[1]} cardsCount={10} />
+                </div>
             </div>
             <span className={"hidden lg:inline text-primary text-[28px] px-[10px]"}>
                 :
             </span>
             <div className={"flex"}>
-                <Card value={next.minutes[0] == 9 ? 9 : time.minutes[0]} nextValue={next.minutes[0]} />
-                <Card value={next.minutes[1] == 9 ? 9 : time.minutes[1]} nextValue={next.minutes[1]} />
+                <div className={"h-[200px] relative flex flex-col gap-[1px]"}>
+                    <div className={`relative w-[70px] h-[100px] bg-black flex items-bottom justify-center`}>
+                        <span className={"text-white text-[80px] -bottom-[40px] relative"}>{time.minutes[0]}</span>
+                    </div>
+                    <CardStack value={time.minutes[0]} cardsCount={6} />
+                </div>
+                <div className={"h-[200px] relative flex flex-col gap-[1px]"}>
+                    <div className={`relative w-[70px] h-[100px] bg-black flex items-bottom justify-center`}>
+                        <span className={"text-white text-[80px] -bottom-[40px] relative"}>{time.minutes[1]}</span>
+                    </div>
+                    <CardStack value={time.minutes[1]} cardsCount={10} />
+                </div>
             </div>
             <span className={"hidden lg:inline text-primary text-[28px] px-[10px]"}>
                 :
             </span>
             <div className={"flex"}>
-                <Card value={next.seconds[0] == 9 ? 9 : time.seconds[0]} nextValue={next.seconds[0]} />
-                <Card value={next.seconds[1] == 9 ? 9 : time.seconds[1]} nextValue={next.seconds[1]} />
+                <div className={"h-[200px] relative flex flex-col gap-[1px]"}>
+                    <div className={`relative w-[70px] h-[100px] bg-black flex items-bottom justify-center`}>
+                        <span className={"text-white text-[80px] -bottom-[40px] relative"}>{time.seconds[0]}</span>
+                    </div>
+                    <CardStack value={time.seconds[0]} cardsCount={6} />
+                </div>
+                <div className={"h-[200px] relative flex flex-col gap-[1px]"}>
+                    <div className={`relative w-[70px] h-[100px] bg-black flex items-bottom justify-center`}>
+                        <span className={"text-white text-[80px] -bottom-[40px] relative"}>{time.seconds[1]}</span>
+                    </div>
+                    <CardStack value={time.seconds[1]} cardsCount={10} />
+                </div>
             </div>
         </>
     )

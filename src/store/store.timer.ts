@@ -1,18 +1,16 @@
 import { create } from "zustand";
-import {TimerState} from "../interface/ITimer";
+import {TimeState} from "../interface/ITimer";
 import {createJSONStorage, persist} from "zustand/middleware";
 
 
-export const useTimerStore = create<TimerState>()(
+export const useTimerStore = create<TimeState>()(
     persist(
         (set) => ({
             initValueSeconds: 0,
             countValue: 0,
-            nextValue: 0,
             isPaused: false,
             isLoading: false,
             setInitValueSeconds: (seconds:number) => set(() => ({ initValueSeconds: seconds })),
-            setNextValue: (value: number) => set(() => ({nextValue: value })),
             setCountValue: (value: number) => set(() => ({countValue: value })),
             setIsPaused: (paused:boolean) => set(() => ({isPaused: paused })),
             setIsLoading: (loading:boolean) => set(() => ({isLoading: loading })),

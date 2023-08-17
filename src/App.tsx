@@ -7,32 +7,43 @@ import Timer from "./pages/timer";
 import Layout from "./components/Layout/Layout";
 import Pomodoro from "./pages/pomodoro";
 import About from "./pages/about";
+import Dashboard from "./pages/dashboard";
 import {useEffect} from "react";
 import {useTimerStore} from "./store/store.timer";
-import Dashboard from "./pages/dashboard";
+import {usePomodoroStore} from "./store/store.pomodoro";
 
 function App() {
     const {
-        countValue,
-        isPaused,
-        setCountValue,
-        setNextValue,
+        countValue: timerCountValue,
+        isPaused: isTimerPaused,
+        setCountValue: setTimerCountValue,
     } = useTimerStore();
-    useEffect(() => {
-        if(countValue > 0 && !isPaused){
-            const interval = setInterval(() => {
-                setCountValue( countValue - 1);
-            }, 2000);
-            const timeout = setTimeout(() => {
-                setNextValue(countValue - 1);
-            }, 1000);
 
+    const {
+        countValue: pomodoroCountValue,
+        isPaused: isPomodoroPaused,
+        setCountValue: setPomodoroCountValue,
+    } = usePomodoroStore();
+
+    useEffect(() => {
+        if (timerCountValue > 0 && !isTimerPaused) {
+            const timerInterval = setInterval(() => {
+                setTimerCountValue(timerCountValue - 1);
+            }, 1000);
             return () => {
-                clearInterval(interval);
-                clearTimeout(timeout);
+                clearInterval(timerInterval);
             };
         }
-    }, [countValue, setNextValue, isPaused]);
+
+        if (pomodoroCountValue > 0 && !isPomodoroPaused) {
+            const pomodoroInterval = setInterval(() => {
+                setPomodoroCountValue(pomodoroCountValue - 1);
+            }, 1000);
+            return () => {
+                clearInterval(pomodoroInterval);
+            };
+        }
+    }, [timerCountValue, isTimerPaused, pomodoroCountValue, isPomodoroPaused]);
 
     const routes: RouteObject[] = [
         {
