@@ -1,7 +1,6 @@
-import {FC, useEffect, useState} from 'react';
-import {AiOutlineClose, AiOutlineSetting, AiOutlineUser} from "react-icons/ai";
+import {FC} from 'react';
+import {AiOutlineClose, AiOutlineUser} from "react-icons/ai";
 import {IoMoonOutline, IoSunnyOutline} from "react-icons/io5";
-import {themeChange} from "theme-change";
 import {NavLink} from "react-router-dom";
 import {IBreak} from "../../interface/IScreen";
 import {usePomodoroStore} from "../../store/store.pomodoro";

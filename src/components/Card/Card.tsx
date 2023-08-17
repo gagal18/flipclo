@@ -1,4 +1,4 @@
-import {FC, useState} from "react";
+import {FC} from "react";
 import {ICard} from "../../interface/ICard";
 
 const Card: FC<ICard> = ({value, index, length}) => {

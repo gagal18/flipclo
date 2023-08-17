@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from 'react';
+import {FC, useEffect, } from 'react';
 import {useFullscreenStore} from "../store/store.fullscreen";
 import {usePomodoroStore} from "../store/store.pomodoro";
 import FullScreen from "react-fullscreen-crossbrowser";
@@ -15,7 +15,6 @@ import PomodoroInput from "../components/PomodoroInput/PomodoroInput";
 import SlideBreak from "../components/SlideBreak/SlideBreak";
 
 const Pomodoro: FC = () => {
-    const [breakSlide, setBreakSlide] = useState<boolean>(false)
     const {
         initValueSeconds,
         countValue,
@@ -24,7 +23,8 @@ const Pomodoro: FC = () => {
         setInitValueSeconds,
         setIsPaused,
         isLoading,
-        toBreak
+        toBreak,
+        setToBreak
     } = usePomodoroStore();
 
     const {setIsFullscreen, IsFullScreen} = useFullscreenStore()
@@ -50,7 +50,7 @@ const Pomodoro: FC = () => {
     };
     useEffect(() => {
         if(countValue === 0 && toBreak){
-            setBreakSlide(true)
+            setToBreak(true)
         }
     }, [countValue, toBreak])
     return (

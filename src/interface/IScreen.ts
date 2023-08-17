@@ -4,6 +4,5 @@ export interface IScreen{
 }
 
 export interface IBreak{
-    isOpen: boolean,
     timerHandle: (seconds:number) => void,
 }
