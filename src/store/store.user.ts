@@ -1,5 +1,4 @@
 import {create} from "zustand";
-
 import {createJSONStorage, persist} from "zustand/middleware";
 
 import {
@@ -14,6 +13,7 @@ import {
 
 import {auth} from '../firebase/firebase'
 import {AuthStore} from "../interface/IUser";
+import {createUserOnRegister} from "../utils/user.firebase";
 
 
 export const useAuthStore = create<AuthStore>()(
@@ -21,31 +21,29 @@ export const useAuthStore = create<AuthStore>()(
         (set) => ({
             loading: false,
             user: null,
-            signUp: async (email: string, password: string): Promise<UserCredential> => {
+            signUp: async (email: string, password: string, username: string) => {
                 set({ loading: true });
                 try {
                     let existingUser = null;
                     try {
                         existingUser = await signInWithEmailAndPassword(auth, email, password);
                     } catch (error:any) {
-                        // Handle the user not found error
                         if (error.code === 'auth/user-not-found') {
-                            // User doesn't exist, create a new account
-                            const result = await createUserWithEmailAndPassword(auth, email, password);
+                            const result = await createUserWithEmailAndPassword(auth, email, password).then(async (user) => {
+                                await createUserOnRegister({uid: user.user.uid || "", email:user.user.email || "", name: username})
+                                return user
+                            });
                             set({ user: result.user });
                             set({ loading: false });
                             return result;
                         } else {
-                            // Other errors, rethrow the error for error boundary or global error handling
                             throw error;
                         }
                     }
-
-                    // If existingUser is not null, the user exists and is logged in
                     set({ user: existingUser.user });
                     set({ loading: false });
                     return existingUser;
-                } catch (error:any) {
+                } catch (error) {
                     console.log('Error signing up:', error);
                     set({ loading: false });
                     throw error;
@@ -78,7 +76,10 @@ export const useAuthStore = create<AuthStore>()(
                 set({ loading: true });
                 try {
                     const provider = new GoogleAuthProvider();
-                    const result = await signInWithPopup(auth, provider);
+                    const result = await signInWithPopup(auth, provider).then(async (user) => {
+                        await createUserOnRegister({uid: user.user.uid || "", email:user.user.email || "", name: user.user.displayName || ""})
+                        return user
+                    });
                     set({ user: result.user });
                     set({ loading: false });
                     return result;
@@ -93,7 +94,10 @@ export const useAuthStore = create<AuthStore>()(
                 set({ loading: true });
                 try {
                     const provider = new FacebookAuthProvider();
-                    const result = await signInWithPopup(auth, provider);
+                    const result = await signInWithPopup(auth, provider).then(async (user) => {
+                        await createUserOnRegister({uid: user.user.uid || "", email:user.user.email || "", name: user.user.displayName || ""})
+                        return user
+                    });
                     set({ user: result.user });
                     set({ loading: false });
                     return result;
@@ -107,7 +111,10 @@ export const useAuthStore = create<AuthStore>()(
                 set({ loading: true });
                 try {
                     const provider = new GithubAuthProvider();
-                    const result = await signInWithPopup(auth, provider);
+                    const result = await signInWithPopup(auth, provider).then(async (user) => {
+                        await createUserOnRegister({uid: user.user.uid || "", email:user.user.email || "", name: user.user.displayName || ""})
+                        return user
+                    });
                     set({ user: result.user });
                     set({ loading: false });
                     return result;
