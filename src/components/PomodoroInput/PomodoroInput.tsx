@@ -1,11 +1,11 @@
 import { FC, useState, ChangeEvent, FormEvent } from "react";
-import { ITimerInput } from "../../interface/ITimer";
+import {ITimerInput, TimerType} from "../../interface/ITimer";
 import sound_src from "../../assets/sound/race-start-beeps-125125.mp3";
 import { usePomodoroStore } from "../../store/store.pomodoro";
 import SlideInput from "../Input/SlideInput";
 
 const PomodoroInput: FC<ITimerInput> = ({ timerHandle, submitDisabled }) => {
-    const { setIsLoading, setToBreak, setBreakValue } = usePomodoroStore();
+    const { setIsLoading, setToBreak, setBreakValue, setType } = usePomodoroStore();
     const [workMinutes, setWorkMinutes] = useState<number>(1);
     const [breakMinutes, setBreakMinutes] = useState<number>(1);
 
@@ -27,8 +27,9 @@ const PomodoroInput: FC<ITimerInput> = ({ timerHandle, submitDisabled }) => {
         sound.play().then(() => {
             setIsLoading(true);
             setTimeout(() => {
-                timerHandle(workMinutes*60);
-                setBreakValue(breakMinutes*60);
+                timerHandle(10);
+                setBreakValue(10);
+                setType(TimerType.Pomodoro)
                 setIsLoading(false);
                 setToBreak(true)
             }, 3000);

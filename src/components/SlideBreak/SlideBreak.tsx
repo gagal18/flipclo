@@ -1,15 +1,25 @@
 import {FC} from 'react';
-import {AiOutlineClose, AiOutlineUser} from "react-icons/ai";
-import {IoMoonOutline, IoSunnyOutline} from "react-icons/io5";
-import {NavLink} from "react-router-dom";
+import {AiOutlineClose} from "react-icons/ai";
 import {IBreak} from "../../interface/IScreen";
 import {usePomodoroStore} from "../../store/store.pomodoro";
+import {TimerType} from "../../interface/ITimer";
 
 const SlideBreak: FC<IBreak>= ({timerHandle}) => {
-    const { breakValue, isBreakOpen } = usePomodoroStore();
+    const { breakValue, isBreakOpen, setIsBreak, setType, reset, setToBreak } = usePomodoroStore();
+
+    const handleBreakStart = () => {
+        timerHandle(breakValue)
+        setIsBreak(false)
+        setType(TimerType.Break)
+        setToBreak(false)
+
+    };
 
     const handleClose = () => {
-        timerHandle(breakValue)
+        console.log("CLEAR POMODORO STORE")
+        setIsBreak(false)
+        setType(TimerType.Rest)
+        reset()
     };
 
     return (
@@ -26,31 +36,20 @@ const SlideBreak: FC<IBreak>= ({timerHandle}) => {
                         <div>
                             <p>Please start the break</p>
                         </div>
-                        <div className={"flex"}>
-                        <label className="swap swap-rotate mr-1 btn btn-ghost p-0">
-                            <input type="checkbox"/>
-                            <span className="btn btn-square btn-ghost swap-on" data-key="theme" data-set-theme="luxury"
-                                  data-act-class="active">
-                            <IoMoonOutline size={"24px"}/>
-                        </span>
-                            <span className="btn btn-square btn-ghost swap-off" data-key="theme" data-set-theme="wireframe"
-                                  data-act-class="active">
-                            <IoSunnyOutline size={"24px"}/>
-                        </span>
-
-                        </label>
-                        <NavLink to={"/dashboard"} onClick={handleClose}>
-                            <button className="btn btn-ghost">
-                                <AiOutlineUser size={"24px"}/>
+                    </div>
+                    <div className={"flex justify-between"}>
+                        <div className={"flex flex-col items-start justify-between"}>
+                            <button className="btn btn-neutral" onClick={handleBreakStart}>
+                                Start Break
                             </button>
-                        </NavLink>
+                        </div>
+                        <div className={"flex flex-col items-start justify-between"}>
+                            <button className="btn btn-neutral" onClick={handleClose}>
+                                Discard
+                            </button>
                         </div>
                     </div>
-                    <div className={"flex flex-col items-start justify-between"}>
-                        <button className="btn btn-neutral" onClick={handleClose}>
-                            Close Slide
-                        </button>
-                    </div>
+
 
                 </div>
             </div>

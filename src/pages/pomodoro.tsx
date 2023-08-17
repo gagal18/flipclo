@@ -1,4 +1,4 @@
-import {FC, useEffect, } from 'react';
+import {FC, useEffect,} from 'react';
 import {useFullscreenStore} from "../store/store.fullscreen";
 import {usePomodoroStore} from "../store/store.pomodoro";
 import FullScreen from "react-fullscreen-crossbrowser";
@@ -13,6 +13,7 @@ import {
 import PomodoroCards from "../components/Card/PomodoroCards";
 import PomodoroInput from "../components/PomodoroInput/PomodoroInput";
 import SlideBreak from "../components/SlideBreak/SlideBreak";
+import {TimerType} from "../interface/ITimer";
 
 const Pomodoro: FC = () => {
     const {
@@ -24,7 +25,8 @@ const Pomodoro: FC = () => {
         setIsPaused,
         isLoading,
         toBreak,
-        setToBreak
+        setIsBreak,
+        type
     } = usePomodoroStore();
 
     const {setIsFullscreen, IsFullScreen} = useFullscreenStore()
@@ -50,7 +52,7 @@ const Pomodoro: FC = () => {
     };
     useEffect(() => {
         if(countValue === 0 && toBreak){
-            setToBreak(true)
+            setIsBreak(true)
         }
     }, [countValue, toBreak])
     return (
@@ -59,6 +61,10 @@ const Pomodoro: FC = () => {
             <h1 className="text-3xl font-bold underline text-center">
                 Pomodoro
             </h1>
+            {type !== TimerType.Rest && <p className="mt-[20px] text-xl font-semibold underline text-center">
+                {type == TimerType.Pomodoro ? "Time to work!!!" : "Enjoy your rest"}
+            </p>}
+
             <FullScreen
                 enabled={IsFullScreen}
                 onChange={(isFullscreenEnabled: boolean) => setIsFullscreen(isFullscreenEnabled)}
