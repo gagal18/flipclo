@@ -16,6 +16,8 @@ export const usePomodoroStore = create<PomodoroState>()(
     persist(
         (set) => ({
             ...initialState,
+            currentFirestorePomodoro: null,
+            setPomodoroID: (id:string) => set(() => ({ currentFirestorePomodoro: id })),
             setInitValueSeconds: (seconds:number) => set(() => ({ initValueSeconds: seconds })),
             setBreakValue: (seconds:number) => set(() => ({ breakValue: seconds })),
             setToBreak: (val:boolean) => set(() => ({ toBreak: val })),

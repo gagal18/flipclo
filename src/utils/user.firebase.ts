@@ -12,7 +12,6 @@ export const createUserOnRegister = async (userData: ICreateUser) => {
                 email,
                 uid,
             });
-            console.log('User created successfully.');
         }
     } catch (error) {
         console.error('Error creating user:', error);

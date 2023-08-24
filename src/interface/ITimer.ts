@@ -21,6 +21,8 @@ export interface TimeState {
 }
 export interface PomodoroState extends TimeState{
     type: TimerType;
+    currentFirestorePomodoro: string|null;
+    setPomodoroID: (value: string) => void;
     breakValue: number;
     toBreak: boolean;
     isBreakOpen: boolean;
@@ -31,5 +33,5 @@ export interface PomodoroState extends TimeState{
     reset: () => void;
 }
 
-export type PomodoroStateInit = Omit<PomodoroState, "setType" | "setToBreak" | "setIsPaused" | "setIsLoading" | "setIsBreak" | "setInitValueSeconds" | "setCountValue" | "setBreakValue" | 'reset'>
+export type PomodoroStateInit = Omit<PomodoroState, "setPomodoroID"| "currentFirestorePomodoro" | "setType" | "setToBreak" | "setIsPaused" | "setIsLoading" | "setIsBreak" | "setInitValueSeconds" | "setCountValue" | "setBreakValue" | 'reset'>
 

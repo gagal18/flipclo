@@ -3,9 +3,12 @@ import {ITimerInput, TimerType} from "../../interface/ITimer";
 import sound_src from "../../assets/sound/race-start-beeps-125125.mp3";
 import { usePomodoroStore } from "../../store/store.pomodoro";
 import SlideInput from "../Input/SlideInput";
+import {useAuthStore} from "../../store/store.user";
+import {insertPomodoro} from "../../utils/pomodoro.firebase";
 
 const PomodoroInput: FC<ITimerInput> = ({ timerHandle, submitDisabled }) => {
-    const { setIsLoading, setToBreak, setBreakValue, setType } = usePomodoroStore();
+    const { setIsLoading, setToBreak, setBreakValue, setType, setPomodoroID } = usePomodoroStore();
+    const { user } = useAuthStore();
     const [workMinutes, setWorkMinutes] = useState<number>(1);
     const [breakMinutes, setBreakMinutes] = useState<number>(1);
 
@@ -24,15 +27,21 @@ const PomodoroInput: FC<ITimerInput> = ({ timerHandle, submitDisabled }) => {
         const sound = new Audio(sound_src);
 
 
-        sound.play().then(() => {
+        sound.play().then(async () => {
             setIsLoading(true);
             setTimeout(() => {
-                timerHandle(10);
-                setBreakValue(10);
+                timerHandle(workMinutes*60);
+                setBreakValue(breakMinutes*60);
                 setType(TimerType.Pomodoro)
                 setIsLoading(false);
                 setToBreak(true)
-            }, 3000);
+            }, 100);
+            if(user && user.uid){
+                const id = await insertPomodoro({uid: user.uid, length: workMinutes})
+                if(id){
+                    setPomodoroID(id)
+                }
+            }
         }).catch(e => console.log(e));
     };
 

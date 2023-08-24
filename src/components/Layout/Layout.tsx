@@ -4,16 +4,13 @@ import {
     AiOutlineClockCircle,
     AiOutlineHome,
     AiOutlineInfoCircle,
-    AiOutlineLock,
-    AiOutlineUnlock, AiOutlineUser
+    AiOutlineUser
 } from "react-icons/ai";
 import {RxCountdownTimer, RxTimer} from "react-icons/rx";
 import SlideSettings from "../SlideSettings/SlideSettings";
-import {useFullscreenStore} from "../../store/store.fullscreen";
 import {useAuthStore} from "../../store/store.user";
 
 const Layout: FC = () => {
-    const {setIsFullscreen, IsFullScreen} = useFullscreenStore()
     const {user, signOut,deleteUser} = useAuthStore();
 
     return (
@@ -30,21 +27,13 @@ const Layout: FC = () => {
                             </button>
                         </NavLink>
                         <SlideSettings/>
-                        <label className="swap swap-flip mr-1" onClick={() => setIsFullscreen(!IsFullScreen)}>
-                            <input type="checkbox"/>
-                            <span className={`btn btn-square btn-ghost ${IsFullScreen ? "swap-on" : "swap-off"}`}>
-                            <AiOutlineUnlock size={"24px"}/>
-                        </span>
-                            <span className={`btn btn-square btn-ghost ${IsFullScreen ? "swap-off" : "swap-on"}`}>
-                            <AiOutlineLock size={"24px"}/>
-                        </span>
-                        </label>
                         <div className="dropdown dropdown-hover dropdown-end">
+                            <NavLink to={"/dashboard"}>
                             <label tabIndex={0} className="btn btn-square btn-ghost">
-                                <NavLink to={"/dashboard"}>
                                     <AiOutlineUser size={"24px"}/>
-                                </NavLink>
                             </label>
+                            </NavLink>
+
                             {user ?
                                 <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                                     <li>

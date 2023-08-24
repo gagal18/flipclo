@@ -7,7 +7,7 @@ const CardStack: FC<ICardBulk> = ({value, cardsCount}) => {
     return (
         <div className={"relative h-[100px] -top-[100px]"}>
             {elementsArray.map((element) => (
-                <Card value={value} index={element} length={cardsCount} />
+                <Card key={element} value={value} index={element} length={cardsCount} />
             ))}
         </div>
     )

@@ -13,3 +13,17 @@ export const timeFormat = (duration: number) => {
 
     return timeObj;
 };
+
+export const TimeStringFormat = (date: number): string => {
+    const createdAt = new Date(date);
+    const options: Intl.DateTimeFormatOptions  = {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    };
+    return createdAt.toLocaleTimeString('en-US', options);
+};
+

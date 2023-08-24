@@ -3,20 +3,24 @@ import {AiOutlineClose} from "react-icons/ai";
 import {IBreak} from "../../interface/IScreen";
 import {usePomodoroStore} from "../../store/store.pomodoro";
 import {TimerType} from "../../interface/ITimer";
+import {updateStatusEntry} from "../../utils/pomodoro.firebase";
+import {useAuthStore} from "../../store/store.user";
 
 const SlideBreak: FC<IBreak>= ({timerHandle}) => {
-    const { breakValue, isBreakOpen, setIsBreak, setType, reset, setToBreak } = usePomodoroStore();
+    const { breakValue, isBreakOpen, setIsBreak, setType, reset, setToBreak, currentFirestorePomodoro } = usePomodoroStore();
+    const { user } = useAuthStore();
 
-    const handleBreakStart = () => {
+    const handleBreakStart = async () => {
         timerHandle(breakValue)
         setIsBreak(false)
         setType(TimerType.Break)
         setToBreak(false)
-
+        if(user && user.uid && currentFirestorePomodoro){
+            await updateStatusEntry(user.uid,true, currentFirestorePomodoro)
+        }
     };
 
     const handleClose = () => {
-        console.log("CLEAR POMODORO STORE")
         setIsBreak(false)
         setType(TimerType.Rest)
         reset()

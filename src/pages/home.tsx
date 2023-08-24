@@ -20,8 +20,8 @@ const Home: FC = () => {
                 <div className={" "}>
                     Upcoming features:
                     <ol className={"list-decimal list-inside mt-[5px] pl-[20px]"}>
-                        <li>Login/Register</li>
-                        <li>Log entries</li>
+                        <li className={"line-through"}>Login/Register</li>
+                        <li className={"line-through"}>Log entries</li>
                         <li>Statistics</li>
                     </ol>
                 </div>
